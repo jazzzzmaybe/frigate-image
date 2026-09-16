@@ -64,7 +64,8 @@ def main() -> None:
         "单相机视图 选择分支 → webrtc",
     )
 
-    with open(path, "w", encoding="utf-8") as fh:
+    with open(path, "w", encoding="utf-8", newline="
+") as fh:
         fh.write(src)
     remain = src.count('"MediaSource"in window')
     print(f"[patch] 完成: {path} ({before} -> {len(src)} bytes, 剩余 MS 探测 {remain} 处=birdseye/渲染分支，未动)")
