@@ -73,5 +73,3 @@ jobs:
             BASE_IMAGE=${{ env.BASE_IMAGE }}
           labels: |
             org.opencontainers.image.base.digest=${{ steps.gate.outputs.base_digest }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
