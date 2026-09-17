@@ -3,6 +3,7 @@
 Frigate 派生镜像：在基础镜像之上把 **Live UI 的直播模式强制为 WebRTC**（替代官方默认的 MSE 优先），用于降低直播延迟、减少浏览器端 MSE 丢帧与"漂离实时"问题。
 
 - `patch_live_js.py` — 构建期补丁。带**锚点守卫**：上游 web 代码结构变化导致锚点对不上时，构建直接失败（而非静默失效），届时需重新分析 `/opt/frigate/web/assets/Live-*.js` 并更新锚点。
+- `patch_nginx_cache.py` — 构建期补丁 2：把 `/assets/Live-*.js` 的缓存策略覆写为 `no-cache`（每次回源 304 协商）。原因：补丁保持原文件名，nginx 默认的「1 年强缓存」会让老访客长期停留在旧版 JS（表现：仍是 MSE）；改后普通资源缓存策略不变、被命中文件自动跟随每次补丁/重建更新（设备端不再需要清缓存）。
 - CI（GitHub Actions）：push / 每日 04:00（北京时间）检查上游 digest（无变化自动跳过）/ 手动触发。
 - 产物：`ghcr.io/jazzzzmaybe/frigate-image:stable-rocm`，由 Unraid 上的 watchtower 自动跟踪更新。
 

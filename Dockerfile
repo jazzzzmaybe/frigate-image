@@ -8,3 +8,6 @@ LABEL org.opencontainers.image.source="https://github.com/jazzzzmaybe/frigate-im
 
 COPY patch_live_js.py /tmp/patch_live_js.py
 RUN python3 /tmp/patch_live_js.py && rm -f /tmp/patch_live_js.py
+
+COPY patch_nginx_cache.py /tmp/patch_nginx_cache.py
+RUN python3 /tmp/patch_nginx_cache.py && rm -f /tmp/patch_nginx_cache.py
